@@ -1,16 +1,15 @@
-# This is a sample Python script.
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+from pygletmaterial.gui import Gui
+from pygletmaterial.widget import Widget
+from pygletmaterial.rect import Rect
+from pygletmaterial.vector2d import Vector2D
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+if __name__ == "__main__":
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    gui = Gui()
+
+    w1 = Widget(gui, window=gui.windows[0], bb=Rect(center=Vector2D(512, 384), width=100, height=30))
+
+    gui.run()
+

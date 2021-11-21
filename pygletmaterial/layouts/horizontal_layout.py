@@ -1,7 +1,9 @@
 
-from typing import Union
+from typing import Union, TYPE_CHECKING
 
 
+if TYPE_CHECKING:
+    from pygletmaterial.uiobject import UiObject
 from pygletmaterial.layouts.layout import Layout
 from pygletmaterial.window import Window
 from pygletmaterial.widgets import Widget
@@ -9,7 +11,7 @@ from pygletmaterial.widgets import Widget
 
 class HorizontalLayout(Layout):
 
-    def __init__(self, parent: Union[Window, Layout]):
+    def __init__(self, parent: 'UiObject'):
         super().__init__(parent)
 
     def add(self, widget: Widget):

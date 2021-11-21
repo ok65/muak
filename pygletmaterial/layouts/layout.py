@@ -7,6 +7,7 @@ from pygletmaterial.widgets import Widget
 from pygletmaterial.window import Window
 from pygletmaterial.rect import Rect
 from pygletmaterial.uiobject import UiObject
+from pygletmaterial.event import ResizeEvent
 
 
 class Layout(UiObject):
@@ -41,8 +42,9 @@ class Layout(UiObject):
     def add(self, widget: 'Widget'):
         pass
 
-    def on_resize(self):
+    def on_resize(self, event: ResizeEvent):
         print("Layout resize event!")
+        self.layout()
 
     def layout(self):
         if len(self.widgets):

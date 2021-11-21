@@ -1,6 +1,6 @@
 
 # Library imports
-from typing import List
+from typing import List, Optional
 
 # Project imports
 from pygletmaterial.event import Event
@@ -8,10 +8,15 @@ from pygletmaterial.event import Event
 
 class UiObject:
 
-    def __init__(self, parent):
+    def __init__(self, parent, isroot: Optional[bool] = False):
         self._children = []
         self._parent = parent
         self._gui_root = False
+        if not isroot:
+            self._parent.add(self)
+
+    def add(self, obj: 'UiObject'):
+        self._children.append(obj)
 
     @property
     def children(self) -> List:

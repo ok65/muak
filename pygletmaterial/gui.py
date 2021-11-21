@@ -11,8 +11,7 @@ from pygletmaterial.event import ExitEvent
 class Gui(UiObject):
 
     def __init__(self):
-        super().__init__(None)
-        self._gui_root = True
+        super().__init__(None, isroot=True)
         self.windows = [Window(self, (1024, 768))]
 
     def run(self):

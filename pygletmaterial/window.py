@@ -60,25 +60,27 @@ class Window(UiObject):
     def on_draw(self, event: DrawEvent):
         self._window.clear()
         print("window clear")
-        self._batch.draw()
-        print("batch draw")
+        x = self._batch.draw()
+        print("batch draw ({})".format(x))
 
 
 class pygletWindow(pyglet.window.Window):
 
     def __init__(self, parent, size: Tuple[int, int]):
-        self._parent = parent
-        self.batch = pyglet.graphics.Batch()
         super().__init__(*size, resizable=True)
+        self._parent = parent
 
     def on_mouse_motion(self, x, y, dx, dy):
         pass
 
     def on_resize(self, width, height):
+        super().on_resize(width, height)
         self._parent.event(ResizeEvent(self._parent, {"width": width, "height": height}, propagate_only=False))
 
     def on_draw(self):
-        self._parent.event(DrawEvent(self._parent, {}, propagate_only=False))
+        #self._parent.event(DrawEvent(self._parent, {}, propagate_only=False))
+        self._parent.on_draw(0)
 
     def on_close(self):
+        super().on_close()
         self._parent.event(ExitEvent(self._parent, {}, propagate_only=False, propagate_up=True, propagate_down=False))

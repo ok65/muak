@@ -3,7 +3,6 @@
 from typing import TYPE_CHECKING, Optional
 
 import pyglet.shapes
-from sigbox import SignalBoxClass, SignalDecorator
 from pyglet.event import EventDispatcher
 
 # Project imports
@@ -18,7 +17,6 @@ class Widget(UiObject):
 
     def __init__(self, parent: 'Layout'):
         super().__init__(parent)
-        self._parent.add(self)
         self._enable = True
         self._show = True
         self._mouse_on = False

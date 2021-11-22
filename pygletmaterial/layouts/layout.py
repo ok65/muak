@@ -8,6 +8,7 @@ from pygletmaterial.window import Window
 from pygletmaterial.rect import Rect
 from pygletmaterial.uiobject import UiObject
 from pygletmaterial.event import ResizeEvent
+from pygletmaterial.event import MouseMoveEvent
 
 
 class Layout(UiObject):
@@ -15,6 +16,7 @@ class Layout(UiObject):
     def __init__(self, parent: UiObject):
         super().__init__(parent)
         self._rect = Rect()
+        self.show_bb()
 
     @property
     def parent(self):
@@ -45,9 +47,13 @@ class Layout(UiObject):
     def on_resize(self, event: ResizeEvent):
         print("Layout resize event!")
         self.layout()
+        self.show_bb()
 
     def layout(self):
         if len(self.widgets):
             self._rect = self.widgets[0].bounds.copy()
             for widget in self.widgets[1:]:
                 self._rect.expand_to_contain(widget.bounds)
+
+    def on_mouse_move(self, event: MouseMoveEvent):
+        print(self.is_mouse_on())

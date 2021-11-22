@@ -1,9 +1,11 @@
 
 # Library imports
 from typing import List, Optional
+import pyglet
 
 # Project imports
 from pygletmaterial.event import Event
+from pygletmaterial.rect import Rect
 
 
 class UiObject:
@@ -12,26 +14,46 @@ class UiObject:
         self._children = []
         self._parent = parent
         self._gui_root = False
+        self._rect = Rect()
+        self._isroot = isroot
         if not isroot:
             self._parent.add(self)
 
-    def add(self, obj: 'UiObject'):
-        self._children.append(obj)
+    @property
+    def bounds(self):
+        return self._rect
 
     @property
     def children(self) -> List:
         return self._children.copy()
 
     @property
+    def window(self):
+        return self._parent.window
+
+    @property
     def parent(self) -> List:
         return self._parent
+
+    def add(self, obj: 'UiObject'):
+        self._children.append(obj)
 
     def reparent(self, new_parent):
         self._parent = new_parent
 
-    def event(self, event: Event):
+    def show_bb(self):
+        self._debug_sprites = []
+        l1 = pyglet.shapes.Line(*self._rect.top_left.tuple(), *self._rect.top_right.tuple(), width=5, color=(255, 0, 0), batch=self.window.batch[0])
+        l2 = pyglet.shapes.Line(*self._rect.top_right.tuple(), *self._rect.bottom_right.tuple(), width=5, color=(255, 0, 0), batch=self.window.batch[0])
+        l3 = pyglet.shapes.Line(*self._rect.bottom_right.tuple(), *self._rect.bottom_left.tuple(), width=5, color=(255, 0, 0), batch=self.window.batch[0])
+        l4 = pyglet.shapes.Line(*self._rect.bottom_left.tuple(), *self._rect.top_left.tuple(), width=5, color=(255, 0, 0), batch=self.window.batch[0])
+        self._debug_sprites = [l1, l2, l3, l4]
 
-        print(event.name)
+    def is_mouse_on(self):
+        if self.window.mouse_in_window:
+            return self._rect.contains_point(self.window.mouse_position)
+
+    def event(self, event: Event):
 
         # If propagate only flag is set, do not handle locally. Clear flag for next recipient.
         # Otherwise call local on_eventname() method

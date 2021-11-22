@@ -1,9 +1,7 @@
 
 # Library imports
 from typing import TYPE_CHECKING, Optional, Dict
-
 import pyglet.shapes
-from pyglet.event import EventDispatcher
 
 # Project imports
 if TYPE_CHECKING:
@@ -20,19 +18,10 @@ class Widget(UiObject):
         self._enable = True
         self._show = True
         self._mouse_on = False
-        self._rect = Rect()
         self._anchor = Vector2D(0, 0)
         self._debug_sprites = []
         self._sprites = []
         self._style = style if style else {}
-
-    @property
-    def parent(self):
-        return self._parent
-
-    @property
-    def bounds(self):
-        return self._rect
 
     @property
     def anchor(self) -> Vector2D:
@@ -55,16 +44,7 @@ class Widget(UiObject):
         for sprite in self._sprites:
             sprite.position = self._anchor
 
-        self.show_bb()
-
-    def show_bb(self):
-        self._debug_sprites = []
-        l1 = pyglet.shapes.Line(*self._rect.top_left.tuple(), *self._rect.top_right.tuple(), color=(255, 0, 0), batch=self.window.batch[0])
-        l2 = pyglet.shapes.Line(*self._rect.top_right.tuple(), *self._rect.bottom_right.tuple(), color=(255, 0, 0), batch=self.window.batch[0])
-        l3 = pyglet.shapes.Line(*self._rect.bottom_right.tuple(), *self._rect.bottom_left.tuple(), color=(255, 0, 0), batch=self.window.batch[0])
-        l4 = pyglet.shapes.Line(*self._rect.bottom_left.tuple(), *self._rect.top_left.tuple(), color=(255, 0, 0), batch=self.window.batch[0])
-
-        self._debug_sprites = [l1, l2, l3, l4]
+        #self.show_bb()
 
     def on_init(self):
         pass
@@ -79,9 +59,6 @@ class Widget(UiObject):
         print("mouse on: {}".format(mouse_on))
         pass
 
-    @property
-    def window(self):
-        return self._parent.window
 
     @property
     def enable(self) -> bool:
@@ -99,14 +76,7 @@ class Widget(UiObject):
     def show(self, value: bool):
         self._show = value
 
-    def is_mouse_on(self):
-        self.a =  self.window.mouse_in_window
-        pass
-        if self.window.mouse_in_window:
-            return self._rect.contains_point(self.window.mouse_position)
-
     def on_mouse(self):
-
         if not self._mouse_on:
             if self.is_mouse_on():
                 self._mouse_on = True

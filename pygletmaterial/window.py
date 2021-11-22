@@ -43,12 +43,16 @@ class Window(UiObject):
         return self._window.height
 
     @property
+    def window(self):
+        return self
+
+    @property
     def mouse_in_window(self) -> bool:
         return self._window._mouse_in_window
 
     @property
     def mouse_position(self) -> Optional[Vector2D]:
-        return Vector2D(self._window._mouse_x, self._window._mouse_y) if self._window.mouse_in_window else None
+        return Vector2D(self._window._mouse_x, self._window._mouse_y) if self._window._mouse_in_window else None
 
     @property
     def anchor(self):
@@ -73,7 +77,7 @@ class pygletWindow(pyglet.window.Window):
         self._parent = parent
 
     def on_mouse_motion(self, x, y, dx, dy):
-        self._parent.event(MouseEvent(self._parent, {"mouse": Vector2D(x, y)}, propagate_only=False))
+        self._parent.event(MouseMoveEvent(self._parent, {"mouse": Vector2D(x, y)}, propagate_only=True))
 
     def on_resize(self, width, height):
         super().on_resize(width, height)

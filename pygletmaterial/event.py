@@ -5,7 +5,7 @@ import re
 
 # Project imports
 if TYPE_CHECKING:
-    from uiobject import UiObject
+    from pygletmaterial.uiobject import UiObject
 
 
 class Event:
@@ -34,4 +34,4 @@ class DrawEvent(Event): pass
 
 class ExitEvent(Event): pass
 
-class MouseEvent(Event): pass
+class MouseMoveEvent(Event): pass

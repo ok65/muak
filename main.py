@@ -4,7 +4,7 @@ from pygletmaterial.gui import Gui
 from pygletmaterial.widgets import Label
 from pygletmaterial.vector2d import Vector2D
 from pygletmaterial.layouts import HorizontalLayout
-from pygletmaterial.window import pygletWindow
+from pygletmaterial.widgets.button import Button
 
 from pyglet.shapes import Line
 import pyglet
@@ -37,10 +37,11 @@ if __name__ == "__main__":
 
     #la1 = Label("hi", x=200, y=200, batch=wind.batch)
 
-    l1 = Label(layout, "Hello", Vector2D(512, 384))
-    l2 = Label(layout, "world", Vector2D(0,0))
-    l3 = Label(layout, "keep", Vector2D(0, 0))
-    l4 = Label(layout, "coding", Vector2D(0, 0))
+    #l1 = Label(layout, "Hello", Vector2D(512, 384))
+    #l2 = Label(layout, "world", Vector2D(0,0))
+    #l3 = Label(layout, "keep", Vector2D(0, 0))
+    #l4 = Label(layout, "coding", Vector2D(0, 0))
+    b1 = Button(layout, "click me bud", style={"margin": 20})
     layout.layout()
 
 

@@ -1,14 +1,14 @@
 
 # Library imports
 import pyglet
-from typing import Tuple, TYPE_CHECKING, Optional
+from typing import Tuple, TYPE_CHECKING, Optional, List
 
 # Project imports
 if TYPE_CHECKING:
     from pygletmaterial.gui import Gui
 from pygletmaterial.uiobject import UiObject
 from pygletmaterial.vector2d import Vector2D
-from pygletmaterial.event import ResizeEvent, DrawEvent, ExitEvent
+from pygletmaterial.event import *
 
 """
             -------------gui-------------
@@ -28,11 +28,11 @@ class Window(UiObject):
     def __init__(self, parent: UiObject, size: Tuple[int, int]):
         super().__init__(parent)
         self._window = pygletWindow(self, size)
-        self._batch = pyglet.graphics.Batch()
+        self._batches = [pyglet.graphics.Batch() for x in range(10)]
 
     @property
-    def batch(self):
-        return self._batch
+    def batch(self) -> List:
+        return self._batches.copy()
 
     @property
     def width(self):
@@ -60,8 +60,10 @@ class Window(UiObject):
     def on_draw(self, event: DrawEvent):
         self._window.clear()
         print("window clear")
-        x = self._batch.draw()
-        print("batch draw ({})".format(x))
+        draws = 0
+        for batch in self._batches:
+            draws += batch.draw()
+        print("batch draw ({})".format(draws))
 
 
 class pygletWindow(pyglet.window.Window):
@@ -71,15 +73,14 @@ class pygletWindow(pyglet.window.Window):
         self._parent = parent
 
     def on_mouse_motion(self, x, y, dx, dy):
-        pass
+        self._parent.event(MouseEvent(self._parent, {"mouse": Vector2D(x, y)}, propagate_only=False))
 
     def on_resize(self, width, height):
         super().on_resize(width, height)
         self._parent.event(ResizeEvent(self._parent, {"width": width, "height": height}, propagate_only=False))
 
     def on_draw(self):
-        #self._parent.event(DrawEvent(self._parent, {}, propagate_only=False))
-        self._parent.on_draw(0)
+        self._parent.event(DrawEvent(self._parent, {}, propagate_only=False))
 
     def on_close(self):
         super().on_close()

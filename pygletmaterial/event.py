@@ -33,3 +33,5 @@ class ResizeEvent(Event): pass
 class DrawEvent(Event): pass
 
 class ExitEvent(Event): pass
+
+class MouseEvent(Event): pass

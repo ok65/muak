@@ -1,6 +1,6 @@
 
 # Library imports
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Dict
 
 import pyglet.shapes
 from pyglet.event import EventDispatcher
@@ -15,7 +15,7 @@ from pygletmaterial.vector2d import Vector2D
 
 class Widget(UiObject):
 
-    def __init__(self, parent: 'Layout'):
+    def __init__(self, parent: 'Layout', style: Optional[Dict] = None):
         super().__init__(parent)
         self._enable = True
         self._show = True
@@ -24,6 +24,7 @@ class Widget(UiObject):
         self._anchor = Vector2D(0, 0)
         self._debug_sprites = []
         self._sprites = []
+        self._style = style if style else {}
 
     @property
     def parent(self):
@@ -39,8 +40,17 @@ class Widget(UiObject):
 
     def move(self, pos: Vector2D):
         self._anchor = pos
+        self._anchor.x += self._style.get("margin", 0)
+        self._anchor.y -= self._style.get("margin", 0)
 
-        self._rect = Rect(top_left=self._anchor, width=self._sprites[0].content_width, height=self._sprites[0].content_height)
+        try:
+            width = self._sprites[0].content_width
+            height = self._sprites[0].content_height
+        except AttributeError:
+            width = self._sprites[0].width
+            height = self._sprites[0].height
+
+        self._rect = Rect(top_left=self._anchor, width=width, height=height)
 
         for sprite in self._sprites:
             sprite.position = self._anchor
@@ -49,10 +59,10 @@ class Widget(UiObject):
 
     def show_bb(self):
         self._debug_sprites = []
-        l1 = pyglet.shapes.Line(*self._rect.top_left.tuple(), *self._rect.top_right.tuple(), color=(255, 0, 0), batch=self.window.batch)
-        l2 = pyglet.shapes.Line(*self._rect.top_right.tuple(), *self._rect.bottom_right.tuple(), color=(255, 0, 0), batch=self.window.batch)
-        l3 = pyglet.shapes.Line(*self._rect.bottom_right.tuple(), *self._rect.bottom_left.tuple(), color=(255, 0, 0), batch=self.window.batch)
-        l4 = pyglet.shapes.Line(*self._rect.bottom_left.tuple(), *self._rect.top_left.tuple(), color=(255, 0, 0), batch=self.window.batch)
+        l1 = pyglet.shapes.Line(*self._rect.top_left.tuple(), *self._rect.top_right.tuple(), color=(255, 0, 0), batch=self.window.batch[0])
+        l2 = pyglet.shapes.Line(*self._rect.top_right.tuple(), *self._rect.bottom_right.tuple(), color=(255, 0, 0), batch=self.window.batch[0])
+        l3 = pyglet.shapes.Line(*self._rect.bottom_right.tuple(), *self._rect.bottom_left.tuple(), color=(255, 0, 0), batch=self.window.batch[0])
+        l4 = pyglet.shapes.Line(*self._rect.bottom_left.tuple(), *self._rect.top_left.tuple(), color=(255, 0, 0), batch=self.window.batch[0])
 
         self._debug_sprites = [l1, l2, l3, l4]
 
@@ -95,7 +105,7 @@ class Widget(UiObject):
         if self.window.mouse_in_window:
             return self._rect.contains_point(self.window.mouse_position)
 
-    def mouse_update(self):
+    def on_mouse(self):
 
         if not self._mouse_on:
             if self.is_mouse_on():

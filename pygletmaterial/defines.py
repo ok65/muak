@@ -1,0 +1,7 @@
+VALIGN_TOP = "top"
+VALIGN_CENTER = "center"
+VALIGN_BASELINE = "baseline"
+VALIGN_BOTTOM = "bottom"
+HALIGN_LEFT = "left"
+HALIGN_CENTER = "center"
+HALIGN_RIGHT = "right"

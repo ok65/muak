@@ -41,7 +41,9 @@ if __name__ == "__main__":
     #l2 = Label(layout, "world", Vector2D(0,0))
     #l3 = Label(layout, "keep", Vector2D(0, 0))
     #l4 = Label(layout, "coding", Vector2D(0, 0))
-    b1 = Button(layout, "click me bud", style={"margin": 20})
+    b1 = Button(layout, "click me bud")
+    b2 = Button(layout, "or me")
+    b3 = Button(layout, "but not me")
     layout.layout()
 
 

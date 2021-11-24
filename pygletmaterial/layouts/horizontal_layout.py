@@ -33,3 +33,4 @@ class HorizontalLayout(Layout):
 
             widget.move(pos)
             pos.x += widget.bounds.width
+        self.resize_rect()

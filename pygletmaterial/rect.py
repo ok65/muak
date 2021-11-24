@@ -128,7 +128,7 @@ class Rect:
 
         if self._top_left.y < point.y:
             self._top_left.y = point.y
-        elif self._bottom_right > point.y:
+        elif self._bottom_right.y > point.y:
             self._bottom_right.y = point.y
 
     def expand_to_contain(self, rect: 'Rect'):

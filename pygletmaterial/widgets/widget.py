@@ -9,6 +9,7 @@ if TYPE_CHECKING:
 from pygletmaterial.uiobject import UiObject
 from pygletmaterial.rect import Rect
 from pygletmaterial.vector2d import Vector2D
+from pygletmaterial.event import *
 
 
 class Widget(UiObject):
@@ -55,10 +56,17 @@ class Widget(UiObject):
     def on_show(self, show: bool):
         pass
 
-    def on_mouse_over(self, mouse_on: bool):
-        print("mouse on: {}".format(mouse_on))
+    def on_mouse_over(self, event: MouseOverEvent):
+        print("wax on")
+
+    def on_mouse_out(self, event: MouseOutEvent):
+        print("wax off")
+
+    def on_mouse_press(self, event: MousePressEvent):
         pass
 
+    def on_mouse_release(self, event: MouseReleaseEvent):
+        pass
 
     @property
     def enable(self) -> bool:

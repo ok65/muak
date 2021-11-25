@@ -1,6 +1,6 @@
 
 # Library imports
-from typing import TYPE_CHECKING, Optional, List
+from typing import TYPE_CHECKING, Optional, List, Tuple
 import re
 import pyglet
 
@@ -70,3 +70,9 @@ class MouseReleaseEvent(_MouseButtonEvent): pass
 
 class MouseOverEvent(Event): pass
 class MouseOutEvent(Event): pass
+
+
+class StyleChangeEvent(Event):
+    def __init__(self, source: 'UiObject', change: Tuple, propagation: Optional[List] = None):
+        super().__init__(source=source, propagation=propagation)
+        self.change = change

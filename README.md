@@ -1,8 +1,3 @@
-# pyglet_material
-Modern material gui, based on pyglet
+# muak
 
-New name required for pypi.
-
-Canis? No
-
-MUAK
+modern gui for a civilised age

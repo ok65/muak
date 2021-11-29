@@ -3,12 +3,12 @@
 import pyglet
 
 # Project imports
-from pygletmaterial.window import Window
-from pygletmaterial.uiobject import UiObject
-from pygletmaterial.event import ExitEvent
+from muak.window import Window
+from muak.uiobject import UiObject
+from muak.event import ExitEvent
 
 
-class Gui(UiObject):
+class Muak(UiObject):
 
     def __init__(self):
         super().__init__(None, isroot=True)

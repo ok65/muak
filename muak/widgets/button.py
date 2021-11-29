@@ -4,18 +4,25 @@ import pyglet
 from typing import Optional, Dict
 
 # Project imports
-from pygletmaterial.widgets import Widget
-from pygletmaterial.layouts import Layout
-from pygletmaterial.defines import *
-from pygletmaterial.rect import Rect
+from muak.widgets import Widget
+from muak.layouts import Layout
+from muak.defines import *
+from muak.rect import Rect
 
 
 class Button(Widget):
 
-    def __init__(self, parent: Layout, text: str, style: Optional[Dict] = None, z_index=1):
+    def __init__(self, parent: Layout, text: str, style: Optional[Dict] = None):
         super().__init__(parent, style)
-        if style:
-            self._style.update(style)
+        self._text = text
+
+    @property
+    def text(self) -> str:
+        return self._text
+
+    @text.setter
+    def text(self, value: str):
+        self._text = value
 
     def draw(self):
         margin = self._style.get("margin", 0)
@@ -31,3 +38,4 @@ class Button(Widget):
         self._sprites.extend((box, label))
 
     def color(self):
+        pass

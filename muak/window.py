@@ -5,10 +5,10 @@ from typing import Tuple, TYPE_CHECKING, Optional, List
 
 # Project imports
 if TYPE_CHECKING:
-    from pygletmaterial.gui import Gui
-from pygletmaterial.uiobject import UiObject
-from pygletmaterial.vector2d import Vector2D
-from pygletmaterial.event import *
+    from muak.gui import Gui
+from muak.uiobject import UiObject
+from muak.vector2d import Vector2D
+from muak.event import *
 
 """
             -------------gui-------------

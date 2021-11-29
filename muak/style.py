@@ -1,35 +1,38 @@
 
 # Library imports
-from typing import Tuple, TYPE_CHECKING
+from typing import TYPE_CHECKING, Union, Iterable, List
+import inspect
 
 # Project imports
 if TYPE_CHECKING:
-    from pygletmaterial.uiobject import UiObject
-from pygletmaterial.event import StyleChangeEvent, NO_PROPAGATION
-import pygletmaterial.color as color 
-
-
-_UDLR = Tuple[float, float, float, float]
-
-BOLD = "bold"
-NORMAL = "normal"
-SEMIBOLD = "semibold"
-LEFT = "left"
-CENTER = "center"
-RIGHT = "right"
+    from muak.uiobject import UiObject
+from muak.event import StyleChangeEvent
+import muak.color as color
+from muak.defines import *
 
 
 class Style:
 
-    def __init__(self, parent: 'UiObject'):
+    def __init__(self, parent: 'UiObject', style_dict: dict = None):
         self._parent = parent
         self._text_color = color.BLACK
         self._background_color = color.WHITE
         self._font_size = 14
         self._font_weight = NORMAL
         self._text_align = LEFT
-        self._padding = (0, 0, 0, 0)
-        self._margin = (0, 0, 0, 0)
+        self._padding = _TopRightBottomLeft.zero()
+        self._margin = _TopRightBottomLeft.zero()
+        if style_dict:
+            self.update(style_dict)
+
+    def update(self, update_dict: dict):
+        for k, v in update_dict.items():
+            try:
+                getattr(self, k)
+            except AttributeError:
+                continue
+            else:
+                setattr(self, k, v)
 
     @property
     def text_color(self) -> color.Color:
@@ -77,22 +80,107 @@ class Style:
         self._style_change("text_align", value)
 
     @property
-    def padding(self) -> _UDLR:
+    def padding(self):
         return self._padding
 
     @padding.setter
-    def padding(self, value: _UDLR):
+    def padding(self, value):
         self._padding = value
         self._style_change("padding", value)
 
     @property
-    def margin(self) -> _UDLR:
-        return self._margin
+    def margin(self):
+        stk = inspect.stack()
+        if "margin." in stk[1][4][0].strip("\n"):
+            return self._margin
+        else:
+            return self._margin.all
 
     @margin.setter
-    def margin(self, value: _UDLR):
-        self._margin = value
-        self._style_change("margin", value)
+    def margin(self, new_value: Union[float, Iterable[float]]):
+        pass
 
     def _style_change(self, style, value):
         self._parent.event(StyleChangeEvent(None, (style, value), propagation=[NO_PROPAGATION]))
+
+
+class _TopRightBottomLeft:
+
+    def __init__(self, value_list: Union[tuple, list, float]):
+        # All same
+        if not isinstance(value_list, list):
+            self._top = self._right = self._bottom = self._left = value_list
+        # [top, right, bottom, left]
+        elif len(value_list) == 4:
+            self._top = value_list[0]
+            self._right = value_list[1]
+            self._bottom = value_list[2]
+            self._left = value_list[3]
+        # [top, right+left, bottom]
+        elif len(value_list) == 3:
+            self._top = value_list[0]
+            self._right = value_list[1]
+            self._bottom = value_list[2]
+            self._left = value_list[1]
+        # [top+bottom, right+left]
+        elif len(value_list) == 2:
+            self._top = value_list[0]
+            self._right = value_list[1]
+            self._bottom = value_list[0]
+            self._left = value_list[1]
+        else:
+            raise Exception("Expected float/int or list of 2-4 values instead got{}".format(repr(value_list)))
+
+    @classmethod
+    def zero(cls):
+        return _TopRightBottomLeft([0,0,0,0])
+
+    @property
+    def top(self) -> float:
+        return self._top
+
+    @top.setter
+    def top(self, value: float):
+        self._top = value
+
+    @property
+    def right(self) -> float:
+        return self._top
+
+    @right.setter
+    def right(self, value: float):
+        self._top = value
+
+    @property
+    def bottom(self) -> float:
+        return self._top
+
+    @bottom.setter
+    def bottom(self, value: float):
+        self._top = value
+
+    @property
+    def left(self) -> float:
+        return self._top
+
+    @left.setter
+    def left(self, value: float):
+        self._top = value
+
+    @property
+    def all(self) -> List[float]:
+        return [self._top, self._right, self._bottom, self._left]
+
+
+
+if __name__ == "__main__":
+
+
+    style = Style(None)
+
+    print(style.margin.bottom)
+    print(style.margin)
+
+
+
+

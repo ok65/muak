@@ -1,8 +1,9 @@
 
+from collections import OrderedDict
 
 class Color:
 
-    __slots__ = [int, int, int, int]
+    __slots__ = ["red", "green", "blue", "alpha"]
 
     def __init__(self, red: int, green: int, blue: int, alpha: int = 255):
         self.red = red
@@ -573,6 +574,8 @@ YELLOW1 = Color(255, 255, 0)
 YELLOW2 = Color(238, 238, 0)
 YELLOW3 = Color(205, 205, 0)
 YELLOW4 = Color(139, 139, 0)
+
+colors = {}
 #Add colors to colors dictionary
 colors['aliceblue'] = ALICEBLUE
 colors['antiquewhite'] = ANTIQUEWHITE

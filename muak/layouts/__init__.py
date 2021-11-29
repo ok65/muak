@@ -1,3 +1,3 @@
 
-from pygletmaterial.layouts.layout import Layout
-from pygletmaterial.layouts.horizontal_layout import HorizontalLayout
+from muak.layouts.layout import Layout
+from muak.layouts.horizontal_layout import HorizontalLayout

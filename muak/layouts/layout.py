@@ -3,11 +3,11 @@
 from typing import Union
 
 # Project imports
-from pygletmaterial.widgets import Widget
-from pygletmaterial.window import Window
-from pygletmaterial.rect import Rect
-from pygletmaterial.uiobject import UiObject
-from pygletmaterial.event import *
+from muak.widgets import Widget
+from muak.window import Window
+from muak.rect import Rect
+from muak.uiobject import UiObject
+from muak.event import *
 
 
 class Layout(UiObject):

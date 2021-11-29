@@ -1,3 +1,3 @@
-from pygletmaterial.widgets.widget import Widget
-from pygletmaterial.widgets.label import Label
-from pygletmaterial.widgets.button import Button
+from muak.widgets.widget import Widget
+from muak.widgets.label import Label
+from muak.widgets.button import Button

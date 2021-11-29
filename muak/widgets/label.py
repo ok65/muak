@@ -1,9 +1,9 @@
 
 import pyglet
 
-from pygletmaterial.widgets.widget import Widget
-from pygletmaterial.defines import *
-from pygletmaterial.rect import Rect
+from muak.widgets.widget import Widget
+from muak.defines import *
+from muak.rect import Rect
 
 
 class Label(Widget):

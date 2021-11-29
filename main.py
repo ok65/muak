@@ -1,6 +1,6 @@
 
 # Library imports
-from pygletmaterial.gui import Gui
+from muak.gui import Gui
 from pygletmaterial.widgets import Label
 from pygletmaterial.vector2d import Vector2D
 from pygletmaterial.layouts import HorizontalLayout

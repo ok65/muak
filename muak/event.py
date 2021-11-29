@@ -5,14 +5,12 @@ import re
 import pyglet
 
 # Project imports
-from pygletmaterial.vector2d import Vector2D
+from muak.vector2d import Vector2D
 if TYPE_CHECKING:
-    from pygletmaterial.uiobject import UiObject
+    from muak.uiobject import UiObject
 
-PROPAGATE_UP = "up"
-PROPAGATE_DOWN = "down"
-NO_PROPAGATION = "local"
-NO_LOCAL_INVOKE = "nolocal"
+
+
 
 class Event:
 

@@ -4,8 +4,8 @@ from typing import List, Optional
 import pyglet
 
 # Project imports
-from pygletmaterial.event import Event
-from pygletmaterial.rect import Rect
+from muak.event import Event
+from muak.rect import Rect
 
 
 class UiObject:

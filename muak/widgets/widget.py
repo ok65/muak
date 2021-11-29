@@ -5,11 +5,12 @@ import pyglet.shapes
 
 # Project imports
 if TYPE_CHECKING:
-    from pygletmaterial.layouts import Layout
-from pygletmaterial.uiobject import UiObject
-from pygletmaterial.rect import Rect
-from pygletmaterial.vector2d import Vector2D
-from pygletmaterial.event import *
+    from muak.layouts import Layout
+from muak.uiobject import UiObject
+from muak.rect import Rect
+from muak.vector2d import Vector2D
+from muak.event import *
+from muak.style import Style
 
 
 class Widget(UiObject):
@@ -22,7 +23,11 @@ class Widget(UiObject):
         self._anchor = Vector2D(0, 0)
         self._debug_sprites = []
         self._sprites = []
-        self._style = style if style else {}
+        self._style = Style(parent=self, style_dict=style)
+
+    @property
+    def style(self) -> Style:
+        return self._style
 
     @property
     def anchor(self) -> Vector2D:

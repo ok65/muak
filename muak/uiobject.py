@@ -32,7 +32,7 @@ class UiObject:
         return self._parent.window
 
     @property
-    def parent(self) -> List:
+    def parent(self) -> 'UiObject':
         return self._parent
 
     def add(self, obj: 'UiObject'):

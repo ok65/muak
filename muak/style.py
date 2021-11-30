@@ -19,9 +19,11 @@ class Style:
         self._background_color = color.WHITE
         self._font_size = 14
         self._font_weight = NORMAL
+        self._font_family = "Arial"
         self._text_align = LEFT
         self._padding = _TopRightBottomLeft.zero()
         self._margin = _TopRightBottomLeft.zero()
+        self._z_index = 1
         if style_dict:
             self.update(style_dict)
 
@@ -71,6 +73,14 @@ class Style:
         self._style_change("font_weight", value)
 
     @property
+    def font_family(self):
+        return self._font_family
+
+    @font_family.setter
+    def font_family(self, value: str):
+        self._font_family = value
+
+    @property
     def text_align(self) -> str:
         return self._text_align
 
@@ -84,21 +94,27 @@ class Style:
         return self._padding
 
     @padding.setter
-    def padding(self, value):
-        self._padding = value
-        self._style_change("padding", value)
+    def padding(self, value: Union[float, Iterable[float]]):
+        self._padding = _TopRightBottomLeft(value)
+        self._style_change("padding", self._padding)
 
     @property
     def margin(self):
-        stk = inspect.stack()
-        if "margin." in stk[1][4][0].strip("\n"):
-            return self._margin
-        else:
-            return self._margin.all
+        return self._margin
 
     @margin.setter
-    def margin(self, new_value: Union[float, Iterable[float]]):
-        pass
+    def margin(self, value: Union[float, Iterable[float]]):
+        self._margin = _TopRightBottomLeft(value)
+        self._style_change("margin", self._margin)
+
+    @property
+    def z_index(self):
+        return self._z_index
+
+    @z_index.setter
+    def z_index(self, value):
+        self._z_index = value
+        self._style_change("z_index", value)
 
     def _style_change(self, style, value):
         self._parent.event(StyleChangeEvent(None, (style, value), propagation=[NO_PROPAGATION]))

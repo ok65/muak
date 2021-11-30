@@ -25,8 +25,7 @@ class Button(Widget):
         self._text = value
 
     def draw(self):
-        margin = self._style.get("margin", 0)
-        label = pyglet.text.Label(text, font_name="Arial", font_size=36, x=200, y=200,
+        label = pyglet.text.Label(text, font_name="Arial", font_size=self.style.font_size, x=200, y=200,
                                   batch=parent.window.batch[z_index + 1],
                                   anchor_y=VALIGN_TOP, color=(255, 0, 0, 255))
         box_width = label.content_width + (2 * margin)

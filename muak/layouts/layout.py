@@ -23,7 +23,7 @@ class Layout(UiObject):
         return self._parent
 
     @property
-    def window(self):
+    def window(self) -> Window:
         if isinstance(self._parent, Window):
             return self._parent
         else:
